@@ -1,0 +1,56 @@
+[
+  {
+  "endpoint": "dispositivi",
+  "amministratore": "CRUD",
+  "tecnico": "CRUD",
+  "personale ATA": "R",
+  "base":  "R"
+  },
+  {
+    "endpoint": "utenti",
+    "amministratore": "CRUD",
+    "tecnico": "",
+    "personale ATA": "",
+    "base":  ""
+  },
+  {
+    "endpoint": "aule",
+    "amministratore": "CRUD",
+    "tecnico": "R",
+    "personale ATA": "R",
+    "base":  "R"
+  },
+  {
+    "endpoint": "piani",
+    "amministratore": "CRUD",
+    "tecnico": "R",
+    "personale ATA": "R",
+    "base":  "R"
+  },
+  {
+    "endpoint": "notifica",
+    "amministratore": "CRUD",
+    "tecnico": "R",
+    "personale ATA": "R",
+    "base":  "R"
+  },{
+    "endpoint": "segnalazione",
+    "amministratore": "CRUD",
+    "tecnico": "CRU",
+    "personale ATA": "CRU",
+    "base":  "C"
+  },
+  {
+    "endpoint": "ruoli",
+    "amministratore": "CRUD",
+    "tecnico": "R",
+    "personale ATA": "R",
+    "base":  "R"
+  },{
+    "endpoint": "alert",
+    "amministratore": "CRUD",
+    "tecnico": "CRUD",
+    "personale ATA": "CRUD",
+    "base":  ""
+  }
+]

@@ -1,0 +1,908 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Helpdesk API
+  description: API dell'applicativo helpdesk
+
+tags: 
+    - name: utenti
+    - name: dispositivi
+    - name: aule
+    - name: piani
+    - name: notifica
+    - name: segnalazione
+    - name: messaggi
+    - name: chat
+    - name: ruoli
+    - name: assegnazioni utenti
+    - name: categoria
+
+paths:
+  /utenti:
+    get:
+      summary: ritorna tutti gli utenti
+      tags:
+        - utenti
+      description: ritorna una lista contenente tutti gli utenti 
+      parameters:
+        - in: header
+          name: SID
+          description: php session_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: lista di utenti ritornata correttamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    email:
+                      type: string
+                    nome:
+                      type: string
+                    cognome:
+                      type: string
+                    data_creazione:
+                      type: string  
+                    id_ruolo:
+                      type: integer  
+
+
+        '400':
+          description: errore
+               
+    post:
+      summary: aggiunge un utente
+      tags:
+        - utenti
+      description: aggiunge un utente al sistema
+      parameters:
+        - in: header
+          name: SID
+          description: php session_id
+          required: true
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                  properties:
+                    email:
+                      type: string
+                    nome:
+                      type: string
+                    cognome:
+                      type: string
+                    token:
+                      type: string  
+                    data_creazione:
+                      type: string  
+                    id_ruolo:
+                      type: integer  
+      responses:
+        '201':
+          description: creazione effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '422':
+          description: errore di validazione  
+
+    put:
+      summary: modifica un utente
+      tags:
+        - utenti
+      description: aggiorna le informazioni su un utente       
+      parameters:
+        - in: header
+          name: SID
+          description: php session_id
+          required: true
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    email:
+                      type: string
+                    nome:
+                      type: string
+                    cognome:
+                      type: string
+                    token:
+                      type: string  
+                    data_creazione:
+                      type: string  
+                    id_ruolo:
+                      type: integer  
+      responses:
+        '200':
+          description: modifica effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '404':
+          description: utente non trovato  
+        '422':
+          description: errore di validazione                
+
+  /utenti/{id}:
+    delete:
+      summary: elimina utente
+      tags:
+        - utenti    
+      description: elimina un utente per ID
+      parameters:
+        - in: header
+          name: SID
+          description: php session_id
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1            
+      responses:
+        '200':
+          description: eliminato
+        '400':
+          description: id non valido
+    get:
+      summary: ottieni le informazioni su un utente
+      tags:
+        - utenti
+      description: ottini informazioni su un utente per id
+      parameters:
+        - in: header
+          name: SID
+          description: php session_id
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: id dell'utente
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: utente trovato
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    email:
+                      type: string
+                    nome:
+                      type: string
+                    cognome:
+                      type: string
+                    data_creazione:
+                      type: string  
+                    id_ruolo:
+                      type: integer  
+
+
+        '400':
+          description: id non valido
+        '404':
+          description: utente non trovato  
+
+  /dispositivi:
+    get:
+      tags:
+        - dispositivi
+      description: ritorna una lista contenente tutti i dispositivi
+      responses:
+        '200':
+          description: lista di dispositivi ritornata correttamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - id_aula
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    tipo:
+                      type: string  
+                    id_aula:
+                      type: integer  
+
+
+        '400':
+          description: errore
+    post: 
+      tags:
+        - dispositivi
+      description: aggiunta di un dispositivo  
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                  properties:
+                    nome:
+                      type: string
+                    tipo:
+                      type: string
+                    id_aula:
+                      type: integer  
+      responses:
+        '201':
+          description: creazione effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '422':
+          description: errore di validazione  
+    put:
+      tags:
+        - dispositivi
+      description: aggiorna le informazioni su un dispositivo       
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    tipo:
+                      type: string
+                    id_aula:
+                      type: integer
+      responses:
+        '200':
+          description: modifica effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '404':
+          description: dispositivo non trovato  
+        '422':
+          description: errore di validazione  
+
+  /dispositivi/{id}:
+    delete:
+      tags:
+        - dispositivi
+      description: elimina un dispositivo 
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1            
+      responses:
+        '200':
+          description: eliminato
+        '400':
+          description: id non valido 
+
+  /dispositivi/{id_aula}:
+    get:
+      tags:
+        - dispositivi
+      description: ritorna una lista contenente i dispositivi in una aula    
+      parameters:
+        - name: id_aula
+          in: path
+          description: id dell'aula della quale ricevere i dispositivi
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 
+
+        '400':
+          description:           
+  /aule:
+    get:
+      tags:
+        - aule
+      description: ritirna una lista contenente tutte le aule
+      responses:
+        '200':
+          description: lista di aule ritornata correttamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - id_piano
+                  properties:
+                    id:
+                      type: integer
+                    numero:
+                      type: integer    
+                    nome:
+                      type: string
+                    tipo:
+                      type: string  
+                    mostra_sulla_mappa:
+                      type: boolean
+                    id_piano:
+                      type: integer    
+        '400':
+          description: errore              
+    post:
+      tags:
+        - aule
+      description: aggiunta di un aula  
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                    - id_piano
+                  properties:
+                    numero:
+                      type: integer    
+                    nome:
+                      type: string
+                    tipo:
+                      type: string  
+                    mostra_sulla_mappa:
+                      type: boolean
+                    id_piano:
+                      type: integer    
+      responses:
+        '201':
+          description: creazione effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '422':
+          description: errore di validazione 
+    put:
+      tags:
+        - aule
+      description: aggiorna le informazioni su un aula       
+      requestBody: 
+        required: true
+        content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - id_piano
+                  properties:
+                    id:
+                      type: integer
+                    numero:
+                      type: integer    
+                    nome:
+                      type: string
+                    tipo:
+                      type: string  
+                    mostra_sulla_mappa:
+                      type: boolean
+                    id_piano:
+                      type: integer    
+      responses:
+        '200':
+          description: modifica effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '404':
+          description: aula non trovata  
+        '422':
+          description: errore di validazione 
+
+  /aule/{id}:
+    delete:
+      tags:
+        - aule
+      description: elimina un aula
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1            
+      responses:
+        '200':
+          description: eliminato
+        '400':
+          description: id non valido
+    
+
+  /piani:       
+    get:
+      tags:
+        - piani
+      description: ritirna una lista contenente tutti i piano
+      responses:
+        '200':
+          description: lista di piani ritornata correttamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string                
+
+        '400':
+          description: errore   
+
+    post:
+      tags:
+        - piani
+      description: aggiunta di un aula  
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  properties:
+                    nome:
+                      type: string   
+      responses:
+        '201':
+          description: creazione effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '422':
+          description: errore di validazione                 
+    put:
+      tags:
+        - piani  
+      description: aggiorna le informazioni su un piano       
+      requestBody: 
+        required: true
+        content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+      responses:
+        '200':
+          description: modifica effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '404':
+          description: piano non trovato  
+        '422':
+          description: errore di validazione  
+
+  /piani/{id}:
+    delete:
+      tags:
+        - piani
+      description: elimina un piano
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1            
+      responses:
+        '200':
+          description: eliminato
+        '400':
+          description: id non valido
+  /notifica:
+    get:
+      tags:
+        - notifica
+      description: ritirna una lista contenente tutte le notifiche
+      responses:
+        '200':
+          description: lista di notifiche ritornata correttamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - id_utente
+                  properties:
+                    id:
+                      type: integer
+                    messaggio_notifica:
+                      type: string 
+                    notificata:
+                      type: boolean
+                    id_utente:
+                      type: integer
+                    id_segnalazione:
+                      type: integer  
+
+        '400':
+          description: errore
+    post:  
+      tags:
+        - notifica
+      description: aggiunta di una notifica
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                    - id_utente
+                  properties:
+                    nmessaggio_notifica:
+                      type: string 
+                    id_utente:
+                      type: integer
+                    id_segnalazione:
+                      type: integer  
+      responses:
+        '201':
+          description: creazione effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '422':
+          description: errore di validazione     
+    put:
+      tags:
+        - notifica
+      description: aggiorna le informazioni su un piano       
+      requestBody: 
+        required: true
+        content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - id_utente
+                  properties:
+                    id:
+                      type: integer
+                    messaggio_notifica:
+                      type: string 
+                    notificata:
+                      type: boolean
+                    id_utente:
+                      type: integer
+                    id_segnalazione:
+                      type: integer  
+      responses:
+        '200':
+          description: modifica effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '404':
+          description: notifica non trovata  
+        '422':
+          description: errore di validazione
+  /notifica/{id}:
+    get:
+      tags:
+        - notifica
+      description: ritirna una lista contenente tutte le notifiche
+      parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type : integer
+              format: int64
+              minimum: 1   
+      responses:
+        '200':
+          description: notifica ritornata correttamente
+          
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - id_utente
+                  properties:
+                    id:
+                      type: integer
+                    messaggio_notifica:
+                      type: string 
+                    notificata:
+                      type: boolean
+                    id_utente:
+                      type: integer
+                    id_segnalazione:
+                      type: integer  
+
+        '400':
+          description: errore
+    delete:
+      tags:
+        - notifica
+      description: elimina una notifica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1            
+      responses:
+        '200':
+          description: eliminato
+        '400':
+          description: id non valido
+
+  /segnalazione:
+    get:
+      tags:
+        - segnalazione
+      responses:
+        '200':
+          description: lista di segnalazioni ritornata correttamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    testo_segnalazione:
+                      type: string
+                    testo_soluzione:
+                      type: string
+                    stato:
+                      type: string 
+                    id_utente:
+                      type: integer
+                    data_creazione:
+                      type: string  
+                    id_categoria:
+                      type: integer     
+                    id_aula:
+                      type: integer  
+                    id_dispositivo:
+                      type: integer
+                    presa_in_carico_da:
+                      type: integer
+                    data_presa_in_carico:
+                      type: integer      
+
+
+        '400':
+          description: errore       
+
+    post:  
+      tags:
+        - segnalazione
+      description: aggiunge una segnalazione al sistema
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                  properties:
+                    testo_segnalazione:
+                      type: string
+                    stato:
+                      type: string 
+                    id_utente:
+                      type: integer
+                    data_creazione:
+                      type: string  
+                    id_categoria:
+                      type: integer     
+                    id_aula:
+                      type: integer  
+                    id_dispositivo:
+                      type: integer
+      responses:
+        '201':
+          description: creazione effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '422':
+          description: errore di validazione 
+
+    put:
+      tags:
+        - segnalazione
+      description: aggiorna le informazioni su una segnalazione      
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: integer
+                    testo_segnalazione:
+                      type: string
+                    testo_soluzione:
+                      type: string
+                    stato:
+                      type: string 
+                    id_utente:
+                      type: integer
+                    data_creazione:
+                      type: string  
+                    id_categoria:
+                      type: integer     
+                    id_aula:
+                      type: integer  
+                    id_dispositivo:
+                      type: integer
+                    presa_in_carico_da:
+                      type: integer
+                    data_presa_in_carico:
+                      type: integer   
+      responses:
+        '200':
+          description: modifica effettuata con successo
+          content:
+            application/json:
+              schema:
+                type: string
+              
+        '400':
+          description: input non valido
+        '404':
+          description: utente non trovato  
+        '422':
+          description: errore di validazione
+
+  /segnalazione/{id}:
+    delete:
+      tags:
+        - segnalazione
+      description: elimina una segnalazione  
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1            
+      responses:
+        '200':
+          description: eliminato
+        '400':
+          description: id non valido   
+                           

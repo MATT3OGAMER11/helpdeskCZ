@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>HELPDESK - AULE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/slider.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <div class="container-fluid">
+        <a href="index.html" class="navbar-brand">Helpdesk</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="mappa.html">Mappa</a>
+                <a class="nav-item nav-link" href="chat.html"><i class="bi bi-chat-square-text"></i></a>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"  aria-expanded="false">
+                        <i class="bi bi-bell-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu" id="notifiche" aria-labelledby="dropdownMenuButton1">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-item nav-link" href="auth.php"> <i class="bi bi-person-fill"></i></a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+<div class="research">
+    <div class="row">
+        <input type="text" id="search" oninput="reserchAulaByName(aule)" placeholder="Cerca aula">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownFilter" data-bs-toggle="dropdown"  aria-expanded="false">
+                <i class="bi bi-sliders"></i>
+            </button>
+            <ul class="dropdown-menu" id="filter" aria-labelledby="dropdownFilter">
+                <li>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="slider-text">Visualizza classi</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="switch">
+                                <input type="checkbox" onchange="researchAula(aule)" checked id="class">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <br>
+                <li>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="slider-text">Visualizza laboratori</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="switch">
+                                <input type="checkbox" onchange="researchAula(aule)" checked id="lab">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <br>
+                <li>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="slider-text">Visualizza Uffici</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="switch">
+                                <input type="checkbox" onchange="researchAula(aule)" checked id="uff">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <br>
+                <li>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="slider-text">Visualizza Bagni</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="switch">
+                                <input type="checkbox" onchange="researchAula(aule)" checked id="wc">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <br>
+                <li>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="slider-text">Visualizza altre aule</span>
+                        </div>
+                        <div class="col-6">
+                            <label class="switch">
+                                <input type="checkbox" onchange="researchAula(aule)" checked id="altreA">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <br>
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+<br>
+<div class="content" id="aule">
+</div>
+<div hidden id="cookie-banner" style="position: fixed; bottom: 0; width: 100%; background-color: #f9ed69; padding: 20px; text-align: center; font-size: 16px; z-index: 9999">
+    <p>Questo sito usa i cookie tecnici per l'autenticazione,l'autorizzazione e per fare il modo che l'utente rimanga loggato <button id="accept-cookies" style="margin-left: 15px; padding: 10px;">Accept</button></p>
+</div>
+</body>
+<!--<footer class="text-center bg-secondary footer ">
+    <p  class="text-center p-3">&copy; 2024 Matteo Piazzon. Tutti i diritti riservati.</p>
+</footer>-->
+<script src="script.js"></script>
+<script src="js/notification.js"></script>
+<script src="js/aule.js"></script>
+<script src="js/research.js"></script>
+<script src="js/cookie.js"></script>
+
+
+</html>
